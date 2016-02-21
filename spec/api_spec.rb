@@ -23,16 +23,17 @@ describe OpenSesame::API do
 
   describe "/open" do
     let(:logger) { double("logger", info: nil) }
+    let(:door) { instance_double(OpenSesame::Door, open!: nil) }
 
     before do
       allow(OpenSesame::API).to receive(:logger).and_return(logger)
-      allow(OpenSesame::Door).to receive(:open!)
+      allow(OpenSesame::Door).to receive(:new).and_return(door)
 
       post "/open", { "body" => "open sesame", "from" => "+12345" }
     end
 
     it "tells the door to open" do
-      expect(OpenSesame::Door).to have_received(:open!)
+      expect(door).to have_received(:open!)
     end
 
     it "returns 200 OK" do

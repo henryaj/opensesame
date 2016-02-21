@@ -19,7 +19,7 @@ module OpenSesame
     post "/open" do
       error!("Not authorised", 401) unless params[:body] == "open sesame"
 
-      OpenSesame::Door.open!
+      OpenSesame::Door.new.open!
       API.logger.info "Unlocked door for #{params[:from]}"
 
       { status: "ok" }
