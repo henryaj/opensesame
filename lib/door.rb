@@ -12,6 +12,8 @@ module OpenSesame
       device.call(:open_door)
     end
 
+    private
+
     def default_device
       Particle.device(ENV.fetch("PARTICLE_DEVICE_NAME"))
     end
