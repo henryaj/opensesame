@@ -3,8 +3,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require "api"
 
-unless ENV["PARTICLE_DEVICE_NAME"]
-  raise "PARTICLE_DEVICE_NAME not set in environment"
+required_env_vars = %w(
+  PARTICLE_ACCESS_TOKEN
+  PARTICLE_DEVICE_NAME
+)
+
+required_env_vars.each do |name|
+  raise "#{name} not set in environment" unless ENV[name]
 end
 
 run OpenSesame::API
