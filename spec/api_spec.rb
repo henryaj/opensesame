@@ -1,40 +1,48 @@
-require "airborne"
+require "rack/test"
 
 require "api"
 require "door"
 
-Airborne.configure do |config|
-  config.rack_app = OpenSesame::API
-end
-
 describe OpenSesame::API do
+  include Rack::Test::Methods
+
+  def app
+    OpenSesame::API
+  end
+
   describe "/status" do
     it "returns the API status" do
       get "/status"
 
-      expect_json(status: "ok")
+      expect(last_response).to be_ok
+      expect(JSON.parse(last_response.body)).to eq(
+        {"status" => "ok"}
+      )
     end
   end
 
   describe "/open" do
     before do
       allow(OpenSesame::Door).to receive(:open!)
+      post "/open", { "body" => "open sesame" }
     end
 
     it "tells the door to open" do
-      expect(OpenSesame::Door).to receive(:open!)
-
-      get "/open"
+      expect(OpenSesame::Door).to have_received(:open!)
     end
 
     it "returns 200 OK" do
-      get "/open"
-
-      expect_json(status: "ok")
-      expect_status(200)
+      expect(JSON.parse(last_response.body)).to eq(
+        {"status" => "ok"}
+      )
     end
 
-    xit "requires authorisation"
+    it "requires authorisation" do
+      post "/open", { "body" => "hello dave" }
+
+      expect(last_response.status).to eq(401)
+    end
+
     xit "logs the details of the request"
   end
 end

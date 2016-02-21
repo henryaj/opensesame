@@ -10,7 +10,9 @@ module OpenSesame
       { status: "ok" }
     end
 
-    get "/open" do
+    post "/open" do
+      error!("Not authorised", 401) unless params[:body] == "open sesame"
+
       OpenSesame::Door.open!
 
       { status: "ok" }

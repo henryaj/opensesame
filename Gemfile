@@ -4,5 +4,5 @@ gem "grape"
 
 group :test do
   gem "rspec"
-  gem "airborne"
+  gem "rack-test"
 end
