@@ -1,5 +1,8 @@
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "grape"
 
-gem "rspec", group: :test
+group :test do
+  gem "rspec"
+  gem "airborne"
+end
