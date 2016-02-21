@@ -6,6 +6,12 @@ module OpenSesame
   class API < Grape::API
     format :json
 
+    helpers do
+      def logger
+        API.logger
+      end
+    end
+
     get "/status" do
       { status: "ok" }
     end
@@ -14,6 +20,7 @@ module OpenSesame
       error!("Not authorised", 401) unless params[:body] == "open sesame"
 
       OpenSesame::Door.open!
+      API.logger.info "Unlocked door for #{params[:from]}"
 
       { status: "ok" }
     end
