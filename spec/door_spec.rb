@@ -14,7 +14,7 @@ describe OpenSesame::Door do
   end
 
   it "takes the device name from PARTICLE_DEVICE_NAME by default" do
-    allow(ENV).to receive(:fetch).with("PARTICLE_DEVICE_NAME").
+    expect(ENV).to receive(:fetch).with("PARTICLE_DEVICE_NAME").
       and_return("my-little-particle")
 
     door = OpenSesame::Door.new
