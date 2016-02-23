@@ -5,7 +5,7 @@ describe OpenSesame::Door do
   let(:device) { instance_double(Particle::Device,
     call: nil, name: "my-little-particle")
   }
-  let(:logger) { instance_double(Logger, error: true) }
+  let(:logger) { instance_double(Logger, error: true, info: true) }
 
   before do
     allow(Logger).to receive(:new).and_return(logger)
@@ -20,8 +20,14 @@ describe OpenSesame::Door do
       expect(device).to have_received(:call).with(:open_door)
     end
 
+    it "logs that the door was opened" do
+      door.open!
+
+      expect(logger).to have_received(:info).with("Door opened")
+    end
+
     context "when there is an error" do
-      it "deals nicely with errors" do
+      it "logs the failure and returns it to the caller" do
         allow(device).to receive(:call).with(:open_door).
           and_raise Exception
 

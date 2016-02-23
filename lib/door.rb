@@ -10,6 +10,7 @@ module OpenSesame
 
     def open!
       device.call(:open_door)
+      logger.info("Door opened")
       "door opened"
     rescue Exception => e
       logger.error(e)
