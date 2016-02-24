@@ -6,6 +6,7 @@ require "api"
 required_env_vars = %w(
   PARTICLE_ACCESS_TOKEN
   PARTICLE_DEVICE_NAME
+  SECRET_CODE
 )
 
 required_env_vars.each do |name|

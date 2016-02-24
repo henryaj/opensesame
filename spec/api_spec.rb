@@ -26,10 +26,16 @@ describe OpenSesame::API do
     let(:door) { instance_double(OpenSesame::Door, open!: "door opened") }
 
     before do
+      allow(ENV).to receive(:fetch).with("SECRET_CODE").and_return("open sesame")
+
       allow(OpenSesame::API).to receive(:logger).and_return(logger)
       allow(OpenSesame::Door).to receive(:new).and_return(door)
 
       post "/open", { "body" => "open sesame", "from" => "+12345" }
+    end
+
+    it "gets the door opening code from the environment" do
+      expect(ENV).to have_received(:fetch).with("SECRET_CODE")
     end
 
     it "tells the door to open" do

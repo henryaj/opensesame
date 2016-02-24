@@ -10,6 +10,10 @@ module OpenSesame
       def logger
         API.logger
       end
+
+      def secret_code
+        ENV.fetch("SECRET_CODE")
+      end
     end
 
     get "/status" do
@@ -17,7 +21,9 @@ module OpenSesame
     end
 
     post "/open" do
-      error!("Not authorised", 401) unless params[:body] == "open sesame"
+      unless params[:body] == secret_code
+        error!("Not authorised", 401)
+      end
 
       API.logger.info "Unlocking door for #{params[:from]}..."
       status = OpenSesame::Door.new.open!
