@@ -11,7 +11,7 @@ Sometimes, doors should open themselves.
 
 ## Setup
 
-* Ensure that your PARTICLE_DEVICE_NAME, PARTICLE_ACCESS_TOKEN and SECRET_CODE are set. Then `rackup`.
+* Ensure that your `PARTICLE_DEVICE_NAME`, `PARTICLE_ACCESS_TOKEN` and `SECRET_CODE` are set. Then `rackup`.
 * Get a [Twilio](http://twilio.com) number, and ensure that incoming SMS messages POST to `<your-server-address>/open`.
-* Send a text to your number containing only your SECRET_CODE.
+* Send a text to your number containing only your `SECRET_CODE`.
 * Marvel as your door opens.
