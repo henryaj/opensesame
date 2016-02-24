@@ -1,4 +1,4 @@
-# OpenSesame
+# OpenSesame [![Build Status](https://travis-ci.org/henryaj/opensesame.svg?branch=master)](https://travis-ci.org/henryaj/opensesame)
 
 Sometimes, doors should open themselves.
 
